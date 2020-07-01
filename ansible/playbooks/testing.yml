@@ -1,6 +1,0 @@
----
-
-- hosts: testing
-  become: yes
-  roles:
-    - linux-hardening-role
