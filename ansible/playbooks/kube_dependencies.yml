@@ -1,0 +1,35 @@
+---
+
+- hosts: all-k8s-cluster
+  become: yes
+  remote_user: ferko  ##maybe this way?
+  roles:
+    - packages-role
+
+  vars:
+    packages_role_custom_packages:
+      - docker
+      - apt-transport-https
+      - kubeadm
+    packages_role_custom_key: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+    packages_role_custom_repo: "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+
+## This kind of works but not really    
+#- hosts: k8s-master
+#  become: yes
+#  remote_user: ferko
+#  roles:
+#    - role: packages-role
+#      vars:
+#        packages_role_extra_packages:
+#          - kubectl
+#      tags: [ packages_extra_packages ]
+
+- hosts: k8s-master
+  become: yes
+  remote_user: ferko  
+  roles:
+    - role: packages-role
+      vars:
+        packages_role_custom_packages:
+          - kubectl
