@@ -1,0 +1,8 @@
+---
+
+- name: linux-hardening-role
+  src: https://github.com/alegradi/linux-hardening-role.git
+  version: master
+- name: packages-role
+  src: https://github.com/alegradi/packages-role.git
+  version: master
