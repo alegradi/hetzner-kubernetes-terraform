@@ -1,0 +1,44 @@
+---
+
+- hosts: k8s-master
+  become: yes
+  remote_user: ferko  
+   
+  tasks:
+    - name: Initialize the cluter
+      shell: kubeadm init --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt ## Try to replace this with an Ansible module
+      args:
+        chdir: $HOME
+        creates: cluster_initialized.txt
+    
+    - name: Create .kube directory
+      become: yes
+      become_user: ferko
+      file:
+        path: $HOME/.kube
+        state: directory
+        mode: '0755'
+    
+    - name: Copy Admin config to user's kube config
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: /home/ferko/.kube/config
+        remote_src: yes
+        owner: ferko
+
+    - name: Update .bashrc to export kube config
+      lineinfile:
+        path: /home/ferko/.bashrc
+        insertafter: EOF
+        line: |
+          # Added for kubernetes config
+          export KUBECONFIG=$HOME/.kube/config
+
+    - name: Install pod network  ## Doesn't apply the network correctly yet
+      become: yes
+      become_user: ferko
+      ## Are we sure about the below??, also let's not shell out if we have a module
+      shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml >> pod_network_setup.txt
+      args:
+        chdir: $HOME
+        creates: pod_network_setup.txt

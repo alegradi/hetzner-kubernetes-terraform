@@ -1,15 +1,28 @@
 ---
 
+## The below is a terrible workaround to pass in two arguments at both
+## packages_role_custom_key and packages_role_custom_repo which only accetps one
+## This should really be fixed at the role itself
+
 - hosts: all-k8s-cluster
   become: yes
-  remote_user: ferko  ##maybe this way?
+  remote_user: ferko
   roles:
     - packages-role
-
   vars:
     packages_role_custom_packages:
-      - docker
+      - docker-ce
       - apt-transport-https
+    packages_role_custom_key: "https://download.docker.com/linux/ubuntu/gpg"
+    packages_role_custom_repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable" ## Hardcoded for 16.04
+
+- hosts: all-k8s-cluster
+  become: yes
+  remote_user: ferko
+  roles:
+    - packages-role
+  vars:
+    packages_role_custom_packages:
       - kubeadm
     packages_role_custom_key: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
     packages_role_custom_repo: "deb http://apt.kubernetes.io/ kubernetes-xenial main"
