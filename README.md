@@ -9,7 +9,9 @@ It uses the guide from here to set up the Kubernetes cluster: https://www.digita
 `export TF_VAR_hcloud_token="mytoken"`
 
 - 2, Update the hosts.ini with the IPs terraform has printed when finished running
-- 3, Run Ansible for provisioning
+- 3, Install additional role with running:  
+`ansible-galaxy install -r ansible/roles/requirements.yml --roles-path ansible/roles/` 
+- 4, Run Ansible for provisioning
     - initial.yml
     - kube_dependencies.yml
 
