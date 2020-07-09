@@ -1,0 +1,11 @@
+---
+
+packages_role_custom_packages:
+  - docker-ce
+  - apt-transport-https
+  - kubeadm
+packages_role_custom_key:
+  - "https://download.docker.com/linux/ubuntu/gpg"
+  - "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+packages_role_custom_repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable" ## Hardcoded for 16.04
+  

@@ -1,4 +1,0 @@
----
-
-## want to test using root only for linux hardening and then switching the user
-#ansible_user: root
