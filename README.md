@@ -3,16 +3,31 @@ Hetzner Terraform repository for Kubernetes
 
 It uses the guide from here to set up the Kubernetes cluster: https://www.digitalocean.com/community/tutorials/how-to-create-a-kubernetes-cluster-using-kubeadm-on-ubuntu-16-04
 
+## Requirements
+
+### Software
+This repo was tested running:
+
+Terraform: v0.12.26
+- Using provider.hcloud v1.17.0
+
+Ansible: 2.9.10
+- On Python 2.7.5  
+
+### Other
+
+You will need an API token from Hetzner that you need to pass with the command below. 
+
 ## Usage
 
 - 1, Export the hcloud token for ease of use with:  
 `export TF_VAR_hcloud_token="mytoken"`
 
 - 2, Run Terraform:  
-```
-cd terraform
-terraform apply --auto-approve
-````
+    ```
+    cd terraform
+    terraform apply --auto-approve
+    ````
 
 - 3, Update the hosts.ini with the IPs terraform has printed when finished running
 
